@@ -18,6 +18,7 @@ def get_stock(symbol: str, start: str, end: str):
     data = fetch_stock_data(symbol, start, end)
     return data.tail(10).to_dict(orient="records")
 
+
 @app.get("/crypto")
 def get_crypto(symbol: str = "BTC/USDT", timeframe: str = "1d", limit: int = 5):
     """
