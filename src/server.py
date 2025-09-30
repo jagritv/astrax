@@ -59,7 +59,7 @@ def predict(symbol: str, type: str = "stock", window: int = 20):
     X = np.arange(window).reshape(-1, 1)
     Y = prices
     model = LinearRegression()
-    model.fit(X, Y)  # Fixed variable name (y to Y)
+    model.fit(X, Y)
     next_price = model.predict(np.array([[window]]))[0]
     
     return {"symbol": symbol, "predicted_next_close": next_price}
