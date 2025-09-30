@@ -3,13 +3,21 @@ import ccxt
 import pandas as pd
 
 
-def fetch_stock_data(ticker: str, start: str, end: str) -> pd.DataFrame:
+def fetch_stock_data(symbol: str, start: str, end: str) -> pd.DataFrame:
+    """
+    Fetch stock data from Yahoo Finance with Date as a column.
+    Example: fetch_stock_data("AAPL", "2023-01-01", "2023-12-31")
+    """
+    df = yf.download(symbol, start=start, end=end)
     
-    # Fetch stock data from Yahoo finance
-    # Example. fetch_stock_data("AAPL", "2023-01-01", "2023-12-31")
+    # Fix MultiIndex columns by keeping only the first level (attribute names)
+    if isinstance(df.columns, pd.MultiIndex):
+        df.columns = [col[0] for col in df.columns]
     
-    df = yf.download(ticker, start = start, end = end)
-    return df 
+    # Reset index to move Date from index to a column
+    df = df.reset_index()
+    
+    return df
 
 
 
