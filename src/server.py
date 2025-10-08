@@ -1,8 +1,17 @@
 from fastapi import FastAPI
+from fastapi_cache import FastAPICache
+from fastapi_cache.backends.redis import RedisBackend
+import redis
 from src.data_loader import fetch_stock_data, fetch_crypto_data
 from typing import Optional
 
 app = FastAPI(title = "Stock and Crypto Predictor API")
+
+r = redis.Redis(host='localhost', port=6379, db =0)
+FastAPICache.init(RedisBackend(r), prefix='fastapi-cache')
+
+
+from fastapi_cache.decorator import cache
 
 @app.get("/")
 
